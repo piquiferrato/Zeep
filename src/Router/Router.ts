@@ -1,6 +1,7 @@
 import express, {Request, Response, Express} from 'express';
-import bodyParser = require('body-parser');
 import {UserController} from '../Controllers/UserController';
+import { AuthController } from '../Controllers/AuthController';
+import bodyParser = require('body-parser');
 
 class Router {
 
@@ -15,10 +16,13 @@ class Router {
     }
 
     private userRouts(){
-        this.express.use(bodyParser());
+        this.express.use(bodyParser.urlencoded({extended: false}));
+        this.express.use(bodyParser.json());
+
         this.express.get('/',function(req: Request,res: Response){
-            
+
         })
+        this.express.post('/login', AuthController.login);
         this.express.post('/user', UserController.store);
         this.express.get('/user/:id', UserController.show);
     }

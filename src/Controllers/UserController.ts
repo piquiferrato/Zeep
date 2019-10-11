@@ -14,15 +14,15 @@ export class UserController{
         try{
             user.save();
         } catch (error) {
-            res.status(500).json(error);
+            res.sendStatus(500).json(error);
         }
-        
-        res.status(200).json({user});
+
+        res.sendStatus(200).json({user});
     }
 
     public static async show(req: Request, res: Response){
         const {id} = req.params;
         const user = await User.findOne(id);
-        res.status(200).json({user});
+        res.sendStatus(200).json({user});
     }
 }
