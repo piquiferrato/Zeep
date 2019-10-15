@@ -1,5 +1,6 @@
 import {createConnection} from "typeorm";
 import User from '../Entity/User';
+import { Role } from "../Entity/Role";
 
 
 export async function createConnectionDB(){
@@ -13,6 +14,6 @@ export async function createConnectionDB(){
         database: process.env.DATABASE_DB,
         synchronize: true,
         logging: true,
-        entities: [User]
+        entities: [User, Role]
     });
 };
