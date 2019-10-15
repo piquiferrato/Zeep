@@ -23,6 +23,8 @@ export class AuthController{
             if (AuthenticateUseCase.excecute(user, password)){
                 let session = new Session();
                 session.accesToken = GenerateAccessTokenUseCase.excecute();
+                session.user = user;
+                session.save();
             }
         } catch (error) {
             res.status(500).json(error);
