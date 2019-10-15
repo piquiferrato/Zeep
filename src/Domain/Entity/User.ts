@@ -1,6 +1,5 @@
 import {Entity, PrimaryGeneratedColumn, Column, BaseEntity, OneToMany} from "typeorm";
 import Post from "./Post"
-const bcrypt = require('bcrypt');
 
 @Entity()
 class User extends BaseEntity{
@@ -23,11 +22,6 @@ class User extends BaseEntity{
     @OneToMany(type => Post, post => post.user)
     posts: Post[];
 
-    hashPassword(password : string) {
-        let hashedPassword = bcrypt.hashSync(password, 10);
-        return hashedPassword;
-    }
-
     checkIfUnencryptedPasswordIsValid(unencryptedPassword: string, hash : string) {
         var auth = false;
         if(bcrypt.compareSync(unencryptedPassword, hash)) {
@@ -36,7 +30,7 @@ class User extends BaseEntity{
         return auth;
     }
 
-    
+
 }
 
 export default User;

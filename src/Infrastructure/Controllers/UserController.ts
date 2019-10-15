@@ -1,15 +1,13 @@
 import {Request, Response} from 'express';
-import User from '../Entity/User';
+import User from 'Domain/Entity/User';
+import * as Joi from '@hapi/joi';
 
 export class UserController{
 
     public static async store(req: Request, res: Response) {
         const user = new User();
 
-        const {name, dni, password} = req.body;
-        
         user.name = name;
-        user.dni = dni;
         user.isBlocked = false;
         console.log(user.hashPassword(password));
         user.password = user.hashPassword(password);
@@ -19,7 +17,7 @@ export class UserController{
         } catch (error) {
             res.status(500).json(error);
         }
-        
+
         res.status(200).json({user});
     }
 

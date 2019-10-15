@@ -4,6 +4,8 @@ import User from "./User";
 @Entity()
 class Session extends BaseEntity{
 
+    public static readonly ACCESS_TOKEN_LENGTH : number = 20;
+
     @PrimaryGeneratedColumn()
     public id: number;
 
@@ -23,8 +25,6 @@ class Session extends BaseEntity{
         }
         return result;
     }
-
-    public static ACCESS_TOKEN_LENGTH : number = 20;
 }
 
 export default Session;
