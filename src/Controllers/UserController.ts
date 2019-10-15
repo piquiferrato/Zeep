@@ -1,6 +1,8 @@
 import {Request, Response} from 'express';
 import User from '../Entity/User';
 import { Role } from '../Entity/Role';
+import * as crypto from 'crypto';
+import { Hash } from 'crypto';
 
 export class UserController{
 
@@ -11,15 +13,18 @@ export class UserController{
 
         user.isBlocked = false;
         user.username = username;
-        user.password = password;
+
+        const hash: Hash = crypto.createHash('sha256');
+        const hashedPassword: string = hash.update(password).digest('hex');
+
+        user.password = hashedPassword;
 
         try{
             user.save();
+            res.json({ok: true, user: {username: user.username}});
         } catch (error) {
-            res.status(500).json(error);
+            res.status(500).json({ok: false, error});
         }
-
-        res.json({user});
     }
 
     public static async show(req: Request, res: Response){
