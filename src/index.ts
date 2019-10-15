@@ -22,8 +22,9 @@ class App {
     }
 
     private upServer(){
-        this.express.listen(3000, function(){
-            console.log('Server is run in port 3000');
+        const {PORT} = process.env
+        this.express.listen(PORT, function(){
+            console.log(`Server is run in port ${PORT}`);
         });
     }
 
