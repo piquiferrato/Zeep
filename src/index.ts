@@ -1,7 +1,7 @@
 import express, {Express} from 'express';
-import Router from './Router/Router'
+import Router from './Infrastructure/Router/Router'
 import "reflect-metadata";
-import {createConnectionDB} from './DataBase/Configuration'
+import {createConnectionDB} from './Infrastructure/DataBase/Configuration'
 import * as dotenv from 'dotenv';
 
 class App {
