@@ -1,5 +1,5 @@
 import {Response, Request} from 'express';
-import User from '../Entity/User';
+import User from '../../Domain/Entity/User';
 import * as crypto from 'crypto';
 import { Hash } from 'crypto';
 

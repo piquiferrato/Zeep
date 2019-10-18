@@ -1,6 +1,6 @@
 import {Request, Response} from 'express';
-import User from '../Entity/User';
-import { Role } from '../Entity/Role';
+import User from '../../Domain/Entity/User';
+import { Role } from '../../Domain/Entity/Role';
 import * as crypto from 'crypto';
 import { Hash } from 'crypto';
 

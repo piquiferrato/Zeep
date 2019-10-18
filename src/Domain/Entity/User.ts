@@ -1,5 +1,6 @@
 import {Entity, PrimaryGeneratedColumn, Column, BaseEntity, ManyToMany, JoinTable} from "typeorm";
 import { Role } from "./Role";
+import Post from "./Post";
 
 @Entity()
 class User extends BaseEntity{
@@ -11,9 +12,10 @@ class User extends BaseEntity{
     private _password: string;
     private _isBlocked: boolean;
     private _roles: Role[];
+    private _posts: Post[];
 
-    public hasRole(role: Role){
-      const result = this.roles.find(element => element.name === role.name);
+    public hasRole(role: string){
+      const result = this.roles.find(element => element.name === role);
 
       return !!result;
     }
@@ -40,6 +42,11 @@ class User extends BaseEntity{
     @JoinTable()
     public set roles(value: Role[]) { this._roles = value; }
     public get roles(): Role[] { return this._roles; }
+
+    @ManyToMany(type => Post)
+    @JoinTable()
+    public set posts(value: Post[]) { this._posts = value; }
+    public get posts(): Post[] { return this._posts; }
 }
 
 export default User;
