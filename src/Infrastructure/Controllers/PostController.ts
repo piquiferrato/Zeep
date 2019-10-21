@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import PostShowAdapter from '../Adapters/PostShowAdapter';
 import ShowPostCommand from '../Commands/ShowPostCommand';
 import ShowPostsService from '../../Domain/Service/PostShowService';
+import "express-async-errors"
 
 class PostController {
     public static async all(req: Request, res: Response) {

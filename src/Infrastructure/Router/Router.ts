@@ -1,10 +1,12 @@
-import {Express} from 'express';
+import {Express,NextFunction,Request,Response} from 'express';
 import {UserController} from '../Controllers/UserController';
 import { AuthController } from '../Controllers/AuthController';
 import bodyParser = require('body-parser');
 import PostController from '../Controllers/PostController';
 import {inject} from "inversify";
 import {AuthenticateMiddleware} from "../Middlewares/AuthenticateMiddleware";
+import container from "../../inversify.config";
+import {ErrorHandler} from "../utils/ErrorHandler";
 
 class Router {
 
@@ -30,6 +32,14 @@ class Router {
     private userRoutes(){
         this.express.use(bodyParser.urlencoded({extended: false}));
         this.express.use(bodyParser.json());
+
+        this.express.use((err:Error,req: Request,res: Response, next: NextFunction)=>{
+            const errorHandler: ErrorHandler = container.get(ErrorHandler);
+
+            errorHandler.handle(err,res);
+
+        });
+
 
         this.express.post('/login', this.authController.login);
         this.express.post('/register', this.authController.register);
