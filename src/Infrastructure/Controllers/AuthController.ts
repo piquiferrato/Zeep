@@ -2,12 +2,15 @@ import {Response, Request} from 'express';
 import User from '../../Domain/Entity/User';
 import {IHashService} from "../Services/IHashService";
 import Session from "../../Domain/Entity/Sessions";
+import {inject, injectable} from "inversify";
+import TYPES from "../../types";
 
+@injectable()
 export class AuthController {
 
     private hashService :IHashService;
 
-    public constructor(hashService: IHashService){
+    public constructor(@inject(TYPES.IHashService) hashService: IHashService){
         this.hashService = hashService;
     }
 

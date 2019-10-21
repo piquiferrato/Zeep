@@ -3,12 +3,15 @@ import Session from "../../Domain/Entity/Sessions";
 import { UnauthorizedException } from "../Exceptions/UnauthorizedException";
 import { EntityNotFound } from "../../Domain/Exceptions/EntityNotFound";
 import {IHashService} from "./IHashService";
+import {inject, injectable} from "inversify";
+import TYPES from "../../types";
 
-class AuthorizationService {
+@injectable()
+class CurrentUserService {
 
     private hashService: IHashService;
 
-    public constructor(hashService: IHashService) {
+    public constructor(@inject(TYPES.IHashService) hashService: IHashService) {
         this.hashService = hashService;
     }
 
@@ -18,7 +21,7 @@ class AuthorizationService {
             throw new UnauthorizedException('Forbidden');
         }
 
-        const result: number = await User.count({ where :{ id: session.id } });
+        const result: number = await User.count({ where :{ id: session.id, isBlocked: false} });
         if (result != 1) {
             throw new EntityNotFound('User not found');
         }
@@ -31,4 +34,4 @@ class AuthorizationService {
     }
 }
 
-export default AuthorizationService;
+export default CurrentUserService;
