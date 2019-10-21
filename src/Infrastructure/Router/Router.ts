@@ -1,8 +1,9 @@
-import express, {Request, Response, Express} from 'express';
+import {Express} from 'express';
 import {UserController} from '../Controllers/UserController';
 import { AuthController } from '../Controllers/AuthController';
 import bodyParser = require('body-parser');
 import PostController from '../Controllers/PostController';
+import {HashService} from "../Services/HashService";
 
 class Router {
 
@@ -13,16 +14,19 @@ class Router {
     }
 
     public up(){
-        this.userRouts()
+        this.userRoutes()
+
     }
 
-    private userRouts(){
+    private userRoutes(){
         this.express.use(bodyParser.urlencoded({extended: false}));
         this.express.use(bodyParser.json());
 
-        this.express.post('/login', AuthController.login);
+        const authController: AuthController = new AuthController(new HashService());
 
-        this.express.post('/user', UserController.store);
+        this.express.post('/login', authController.login);
+        this.express.post('/register', authController.register);
+
         this.express.get('/user/:id', UserController.show);
         this.express.post('/user/:id', UserController.update);
 

@@ -1,14 +1,12 @@
-import User from "../../Domain/Entity/User";
-
 class ShowPostCommand{
-    private user: User;
+    private userId: number;
 
-    constructor(user: User){
-        this.user = user;
+    constructor(userId: number) {
+        this.userId = userId;
     }
 
-    getUser() {
-        return this.user;
+    getUserId() {
+        return this.userId;
     }
 }
 

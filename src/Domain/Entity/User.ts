@@ -1,4 +1,4 @@
-import {Entity, PrimaryGeneratedColumn, Column, BaseEntity, ManyToMany, JoinTable} from "typeorm";
+import {Entity, PrimaryGeneratedColumn, Column, BaseEntity, ManyToMany, JoinTable, OneToMany} from "typeorm";
 import { Role } from "./Role";
 import Post from "./Post";
 
@@ -43,8 +43,7 @@ class User extends BaseEntity{
     public set roles(value: Role[]) { this._roles = value; }
     public get roles(): Role[] { return this._roles; }
 
-    @ManyToMany(type => Post)
-    @JoinTable()
+    @OneToMany(type => Post, post => post.user)
     public set posts(value: Post[]) { this._posts = value; }
     public get posts(): Post[] { return this._posts; }
 }

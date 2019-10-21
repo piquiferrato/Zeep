@@ -2,7 +2,8 @@ import {Request} from 'express';
 import schemaAuthorization from './Schemas/AuthorizationSchemas';
 import ShowPostCommand from '../Commands/ShowPostCommand';
 import AuthorizationService from '../Services/AuthorizationService';
-import User from '../../Domain/Entity/User';
+import {IHashService} from "../Services/IHashService";
+import {HashService} from "../Services/HashService";
 
 class PostShowAdapter{
     public constructor(){
@@ -18,8 +19,9 @@ class PostShowAdapter{
             throw resultAuthorization.error;
         }
 
-        const authService = new AuthorizationService();
-        const user: User = await authService.getUser(resultAuthorization.value);
+        const hashService: IHashService = new HashService();
+        const authService = new AuthorizationService(hashService);
+        const user: number = await authService.getUserId(resultAuthorization.value);
 
         return new ShowPostCommand(user);
     }

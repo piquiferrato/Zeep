@@ -2,6 +2,7 @@ import {createConnection} from "typeorm";
 import User from '../../Domain/Entity/User';
 import { Role } from "../../Domain/Entity/Role";
 import Post from "../../Domain/Entity/Post";
+import Session from "../../Domain/Entity/Sessions";
 
 
 export async function createConnectionDB(){
@@ -15,6 +16,6 @@ export async function createConnectionDB(){
         database: process.env.DATABASE_DB,
         synchronize: true,
         logging: true,
-        entities: [User, Role, Post]
+        entities: [User, Role, Post, Session]
     });
 };
