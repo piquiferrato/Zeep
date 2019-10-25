@@ -3,11 +3,10 @@ import PostShowAdapter from '../Adapters/PostShowAdapter';
 import ShowPostCommand from '../Commands/ShowPostCommand';
 import ShowPostsService from '../../Domain/Service/PostShowService';
 import "express-async-errors"
-import { injectable } from 'inversify';
 
-@injectable()
 class PostController {
-    public async all(req: Request, res: Response) {
+    public static async all(req: Request, res: Response) {
+
         try {
             const postAdapter = new PostShowAdapter();
             const command: ShowPostCommand = await postAdapter.adapt(req);
