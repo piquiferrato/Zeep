@@ -1,10 +1,11 @@
 import User from '../Entity/User';
+import ComparePasswordService from '../../Infrastructure/Services/ComparePasswordService';
 
 export default class AuthenticateUseCase{
 
     public static excecute(user : User, password : string) {
 
-        return user.checkIfUnencryptedPasswordIsValid(password, user.password);
+        return ComparePasswordService.checkIfUnencryptedPasswordIsValid(password, user.password);
         
     }
 

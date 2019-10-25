@@ -1,29 +1,34 @@
 import {Request, Response} from 'express';
-import User from 'Domain/Entity/User';
-import * as Joi from '@hapi/joi';
+import User from '../../Domain/Entity/User';
+import { Role } from '../../Domain/Entity/Role';
+import { injectable } from 'inversify';
 
+
+@injectable()
 export class UserController{
 
-    public static async store(req: Request, res: Response) {
-        const user = new User();
-
-        user.name = name;
-        user.isBlocked = false;
-        console.log(user.hashPassword(password));
-        user.password = user.hashPassword(password);
-
-        try{
-            await user.save();
-        } catch (error) {
-            res.status(500).json(error);
-        }
-
-        res.status(200).json({user});
+    public async show(req: Request, res: Response){
+        const {id} = req.params;
+        const user = await User.findOne(id, {relations: ['roles']});
+        res.json({user});
     }
 
-    public static async show(req: Request, res: Response){
+    public async update(req: Request, res: Response){
         const {id} = req.params;
-        const user = await User.findOne(id);
-        res.status(200).json({user});
+        const roleName = req.body.role;
+
+        const user: User = await User.findOne(id);
+
+        try{
+          const role: Role = await Role.findOneOrFail({ where: { name: roleName} });
+
+          user.addRole(role);
+          user.save();
+
+        } catch(e) {
+          res.status(500).json(e);
+        }
+
+        res.json({user});
     }
 }

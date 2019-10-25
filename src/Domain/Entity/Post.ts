@@ -12,9 +12,9 @@ class Post extends BaseEntity{
 
     @Column()
     public body: number;
-    
+
     @ManyToOne(type => User, user => user.posts)
-    user: User;
+    public user: User;
 
 }
 

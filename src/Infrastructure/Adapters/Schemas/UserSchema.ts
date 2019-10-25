@@ -9,7 +9,11 @@ const schema = Joi.object({
 
   password: Joi.string()
     .min(8)
-    .max(25),
+    .max(25)
+    .required(),
+
+  isBlocked: Joi.boolean()
+    .required(),
 });
 
 export default schema;

@@ -1,8 +1,13 @@
 import express, {Express} from 'express';
-import Router from './Router/Router'
+import Router from './Infrastructure/Router/Router'
 import "reflect-metadata";
-import {createConnectionDB} from './DataBase/Configuration'
+import {createConnectionDB} from './Infrastructure/DataBase/Configuration'
 import * as dotenv from 'dotenv';
+import container from "./inversify.config";
+import {AuthController} from "./Infrastructure/Controllers/AuthController";
+import {AuthenticateMiddleware} from "./Infrastructure/Middlewares/AuthenticateMiddleware";
+import { UserController } from './Infrastructure/Controllers/UserController';
+import PostController from './Infrastructure/Controllers/PostController';
 
 class App {
 
@@ -12,19 +17,32 @@ class App {
     constructor(){
         dotenv.config();
         this.express = express();
-        createConnectionDB()
-        this.router = new Router(this.express);
+        createConnectionDB();
+        this.router = new Router(
+            this.express, 
+            container.get(AuthController), 
+            container.get(AuthenticateMiddleware), 
+            container.get(UserController), 
+            container.get(PostController),
+        );
     }
 
     public run(){
+      process
+            .on('unhandledRejection', (reason, p) => {
+                console.error(reason, 'Unhandled Rejection at Promise', p);
+            })
+            .on('uncaughtException', err => {
+                console.error(err, 'Uncaught Exception thrown');
+                process.exit(1);
+            });
         this.upServer();
         this.router.up();
     }
 
     private upServer(){
-        const {PORT} = process.env
-        this.express.listen(PORT, function(){
-            console.log(`Server is run in port ${PORT}`);
+        this.express.listen(3000, function(){
+            console.log('Server is run in port 3000');
         });
     }
 

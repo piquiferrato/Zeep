@@ -1,6 +1,6 @@
 import { CreateUserCommand } from "../Commands/CreateUserCommand";
 import schema from './Schemas/UserSchema';
-import { HashService } from "../Services/HashService";
+import HashService from "../Services/HashService";
 
 export class CreateUserAdapter{
 
