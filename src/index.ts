@@ -6,6 +6,8 @@ import * as dotenv from 'dotenv';
 import container from "./inversify.config";
 import {AuthController} from "./Infrastructure/Controllers/AuthController";
 import {AuthenticateMiddleware} from "./Infrastructure/Middlewares/AuthenticateMiddleware";
+import { UserController } from './Infrastructure/Controllers/UserController';
+import PostController from './Infrastructure/Controllers/PostController';
 
 class App {
 
@@ -16,7 +18,13 @@ class App {
         dotenv.config();
         this.express = express();
         createConnectionDB();
-        this.router = new Router(this.express, container.get(AuthController), container.get(AuthenticateMiddleware));
+        this.router = new Router(
+            this.express, 
+            container.get(AuthController), 
+            container.get(AuthenticateMiddleware), 
+            container.get(UserController), 
+            container.get(PostController),
+        );
     }
 
     public run(){
@@ -40,5 +48,5 @@ class App {
 
 }
 
-const app = new App();
-app.run();
+const app = new App()
+app.run()
