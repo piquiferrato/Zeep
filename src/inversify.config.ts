@@ -20,7 +20,6 @@ container.bind<PostController>(PostController).toSelf();
 container.bind<IHashService>(TYPES.IHashService).to(HashService);
 container.bind<CurrentUserService>(CurrentUserService).toSelf();
 container.bind<AuthenticateMiddleware>(AuthenticateMiddleware).toSelf();
-
 container.bind<ErrorHandler>(ErrorHandler).toSelf();
 
 export default container;

@@ -3,7 +3,6 @@ import User from '../../Domain/Entity/User';
 import { Role } from '../../Domain/Entity/Role';
 import { injectable } from 'inversify';
 
-
 @injectable()
 export class UserController{
 
@@ -12,7 +11,7 @@ export class UserController{
         const user = await User.findOne(id, {relations: ['roles']});
         res.json({user});
     }
-
+  
     public async update(req: Request, res: Response){
         const {id} = req.params;
         const roleName = req.body.role;
