@@ -40,13 +40,13 @@ class Router {
 
         });
 
-
         this.express.post('/login', this.authController.login);
         this.express.post('/register', this.authController.register);
 
         this.express.get('/user/:id', UserController.show);
         this.express.post('/user/:id', UserController.update);
 
+        this.express.use('/posts', this.authMiddleware.redirectIfNotAuthenticate);
         this.express.get('/posts', PostController.all);
     }
 }

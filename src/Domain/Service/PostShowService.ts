@@ -6,7 +6,7 @@ import User from "../Entity/User";
 class ShowPostsService {
 
     public async execute(command: ShowPostCommand): Promise<Post[]> {
-        const user: User = await User.findOneOrFail(command.getUserId());
+        const user: User = await User.findOneOrFail({where: {id: command.getUserId()}, relations:['role'] });
 
         if(user.hasRole(Roles.VIEWER)){
             return Post.find();

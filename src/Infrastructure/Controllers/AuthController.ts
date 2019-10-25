@@ -26,7 +26,6 @@ export class AuthController {
     }
 
     public login = async (req: Request, res: Response): Promise<void> => {
-
         const command: LoginCommand = await this.loginAdapter.adapt(req);
         const {token} = await this.authService.login(command);
 

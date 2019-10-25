@@ -20,6 +20,7 @@ export class AuthenticateMiddleware {
         if(!userId){
             res.status(401).json({error: 'Unauthorized'});
         }
+
         //@ts-ignore
         req.currentUserId = userId;
         next();

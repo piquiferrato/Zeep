@@ -16,20 +16,12 @@ class CurrentUserService {
     }
 
     public async getUserId(token: string): Promise<number> {
-        const session: Session | undefined = await Session.findOne({ token: token });
-        if(!session){
-            throw new UnauthorizedException('Forbidden');
-        }
-
-        const result: number = await User.count({ where :{ id: session.id, isBlocked: false} });
-        if (result != 1) {
-            throw new EntityNotFound('User not found');
-        }
+        const session = await Session.findOne({where: {token: token}});
+        const user = await User.findOne({ where :{ id: session.userId, isBlocked: false} });
 
         if (this.hashService.safeCompare(token, session.token)) {
-            return session.id;
+            return user.id;
         }
-
         throw new UnauthorizedException('Forbidden');
     }
 }
