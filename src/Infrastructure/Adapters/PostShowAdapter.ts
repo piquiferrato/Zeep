@@ -1,5 +1,4 @@
 import {Request} from 'express';
-import schemaAuthorization from './Schemas/AuthorizationSchemas';
 import ShowPostCommand from '../Commands/ShowPostCommand';
 
 class PostShowAdapter{

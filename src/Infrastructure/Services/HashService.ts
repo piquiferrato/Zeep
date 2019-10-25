@@ -10,4 +10,8 @@ export class HashService implements IHashService{
     public make(password: string): string {
         return crypto.createHash('sha256').update(password).digest('hex');
     }
+
+    public newToken(): string {
+        return crypto.randomBytes(256).toString();
+    }
 }
