@@ -14,6 +14,8 @@ var container = new Container();
 
 // Controllers
 container.bind<AuthController>(AuthController).toSelf();
+container.bind<UserController>(UserController).toSelf();
+container.bind<PostController>(PostController).toSelf();
 
 // Services
 container.bind<IHashService>(TYPES.IHashService).to(HashService);

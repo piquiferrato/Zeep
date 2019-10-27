@@ -3,7 +3,9 @@ import PostShowAdapter from '../Adapters/PostShowAdapter';
 import ShowPostCommand from '../Commands/ShowPostCommand';
 import ShowPostsService from '../../Domain/Service/PostShowService';
 import "express-async-errors"
+import { injectable } from 'inversify';
 
+@injectable()
 class PostController {
     public static async all(req: Request, res: Response) {
         //@ts-ignore
