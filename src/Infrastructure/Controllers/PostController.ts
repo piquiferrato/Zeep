@@ -7,7 +7,9 @@ import { injectable } from 'inversify';
 
 @injectable()
 class PostController {
-    public async all(req: Request, res: Response) {
+    public static async all(req: Request, res: Response) {
+        //@ts-ignore
+        console.log(await req.currentUserId);
         try {
             const postAdapter = new PostShowAdapter();
             const command: ShowPostCommand = await postAdapter.adapt(req);

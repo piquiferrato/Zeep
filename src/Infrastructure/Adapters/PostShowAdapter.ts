@@ -8,7 +8,7 @@ class PostShowAdapter{
 
     public async adapt(req: Request): Promise<ShowPostCommand>{
         //@ts-ignore
-        const userId: number = req.currentUserId;
+        const userId: number = await req.currentUserId;
         return new ShowPostCommand(userId);
     }
 }

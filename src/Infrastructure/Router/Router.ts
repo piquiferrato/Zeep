@@ -43,16 +43,13 @@ class Router {
         this.express.use((err : Error, req : Request, res : Response, next : NextFunction)=>{
             const errorHandler : ErrorHandler = container.get(ErrorHandler);
 
-            errorHandler.handle(err);
-        })
-
         this.express.post('/login', this.authController.login);
         this.express.post('/register', this.authController.register);
 
         this.express.get('/user/:id', this.userController.show);
         this.express.post('/user/:id', this.userController.update);
-
-        this.express.get('/posts', this.postController.all);
+        this.express.use('/posts', this.authMiddleware.redirectIfNotAuthenticate);
+        this.express.get('/posts', PostController.all);
     }
 }
 
